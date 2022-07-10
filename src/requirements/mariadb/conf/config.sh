@@ -1,6 +1,6 @@
 #!/bin/bash
 
-USER=user
+USER=$MYSQL_USER
 service mysql start
 mysql -e "CREATE USER '$USER' IDENTIFIED BY '$USER';"
 mysql -e "CREATE DATABASE phpmyadmin;"

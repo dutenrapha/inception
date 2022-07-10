@@ -1,2 +1,2 @@
 all:
-	cd ./src && sudo docker-compose up -d
+	cd ./src && docker-compose up -d

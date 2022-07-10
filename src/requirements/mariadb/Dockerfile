@@ -1,5 +1,6 @@
 FROM debian:buster
 
+ARG MYSQL_USER
 
 COPY conf conf
 

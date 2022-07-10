@@ -2,8 +2,12 @@ version: '3'
 
 services:
     mysql:
-      build: ./requirements/mariadb
+      build:
+        context: ./requirements/mariadb
+        args:
+          MYSQL_USER: ${MYSQL_USER}
       image: mariadb
+      container_name: mariadb
       env_file:
         - .env
       restart: always
