@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+    mysql:
+      image: mariadb
+      env_file:
+        - .env
+      restart: always
+      networks:
+        - inception-network
+
+    networks:
+      inception-network:
+        driver: bridge
