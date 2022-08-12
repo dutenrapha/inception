@@ -11,5 +11,4 @@ RUN bash /conf/config.sh
 
 EXPOSE 3306
 
-
-CMD ["mysqld"]
+CMD service mysql start

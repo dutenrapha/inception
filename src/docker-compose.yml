@@ -1,13 +1,51 @@
 version: '3'
 
 services:
-    mysql:
+    mariadb:
       build:
         context: ./requirements/mariadb
         args:
           MYSQL_USER: ${MYSQL_USER}
-      image: mariadb
+      image: mariadb:rdutenke
       container_name: mariadb
+      volumes:
+        - mariadb:/var/lib/mysql
       env_file:
         - .env
       restart: always
+      ports:
+        - "3306:3306"
+      networks:
+        - rapha-network
+    nginx:
+      build:
+        context: ./requirements/nginx
+      image: nginx:rdutenke
+      container_name: nginx
+      restart: always
+      ports:
+        - "443:443"
+      networks:
+        - rapha-network
+    wordpress:
+      build:
+        context: ./requirements/wordpress
+      image: wordpress:rdutenke
+      container_name: wordpress
+      volumes:
+        - wordpress:/var/www/html
+      env_file:
+        - .env
+      restart: always
+      ports:
+        - "9000:9000"
+      networks:
+        - rapha-network
+volumes:
+    wordpress:
+        external: true
+    mariadb:
+        external: true
+networks:
+    rapha-network:
+        driver: bridge
