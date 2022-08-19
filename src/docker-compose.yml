@@ -14,19 +14,9 @@ services:
         - mariadb:/var/lib/mysql
       env_file:
         - .env
-      restart: always
+      # restart: always
       networks:
         - rapha-network
-    # nginx:
-    #   build:
-    #     context: ./requirements/nginx
-    #   image: nginx:rdutenke
-    #   container_name: nginx
-    #   restart: always
-    #   ports:
-    #     - "443:443"
-    #   networks:
-    #     - rapha-network
     wordpress:
       build:
         context: ./requirements/wordpress
@@ -49,11 +39,25 @@ services:
         - wordpress:/var/www/html
       env_file:
         - .env
-      restart: always
+      # restart: always
       networks:
         - rapha-network
       depends_on:
         - mariadb
+    # nginx:
+    #   build:
+    #     context: ./requirements/nginx
+    #   image: nginx:rdutenke
+    #   container_name: nginx
+    #   volumes:
+    #     - wordpress:/var/www/html
+    #   # restart: always
+    #   ports:
+    #     - "443:443"
+    #   networks:
+    #     - rapha-network
+    #   depends_on:
+    #   - wordpress
 
 volumes:
     wordpress:
