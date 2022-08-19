@@ -1,5 +1,10 @@
 #!/bin/sh
 
+# while ! mariadb -h$WP_MYSQL_HOST -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE &>/dev/null; do
+#     sleep 3
+# done
+
+
 mkdir  /var/www/html/wordpress
 cd /var/www/html/wordpress
 wp core download --allow-root
