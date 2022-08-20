@@ -1,21 +1,15 @@
 FROM debian:buster
 
-COPY conf conf
-
 RUN apt-get update
-RUN apt-get install nginx -y
-RUN apt-get install openssl
-
-RUN mkdir /etc/nginx/ssl
-RUN openssl req -newkey rsa:4096 -x509 -sha256 -days 365 -nodes \
-        -out /etc/nginx/ssl/rdutenke.pem \
-        -keyout /etc/nginx/ssl/rdutenke.key \
-        -subj "/C=BR/ST=SP/L=SP/O=42/OU=SP/CN=rdutenke/"
-
-# nginx conf
-COPY conf/nginx.conf /etc/nginx/conf.d/default.conf
-
+RUN apt-get install -y nginx openssl
 
 EXPOSE 443
+
+COPY ./tools/default /etc/nginx/sites-enabled/default
+COPY ./conf/config.sh /var/www
+
+RUN chmod +x /var/www/config.sh
+
+ENTRYPOINT [ "var/www/config.sh" ]
 
 CMD ["nginx", "-g", "daemon off;"]

@@ -9,11 +9,14 @@ RUN apt-get install -y php7.3
 RUN apt-get install -y php7.3-fpm
 RUN apt-get install -y php7.3-cli
 RUN apt-get install -y php7.3-mysql
+
 RUN apt-get install -y wget
 
-# RUN	adduser -S nginx &&	addgroup -S nginx
-COPY conf/php-fpm.conf /etc/php7/php-fpm.conf
-COPY conf/www.conf /etc/php7/php-fpm.d/www.conf
+# RUN	adduser  nginx --disabled-password
+# RUN usermod -a -G nginx nginx
+COPY conf/php-fpm.conf /etc/php7.3/php-fpm.conf
+# COPY conf/www.conf /etc/php7.3/php-fpm.d/www.conf
+COPY ./conf/www.conf /etc/php/7.3/fpm/pool.d
 
 RUN wget https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
 RUN chmod +x wp-cli.phar
@@ -24,4 +27,6 @@ EXPOSE 9000
 
 ENTRYPOINT ["/conf/config.sh"]
 
-CMD ["/bin/sh", "-c", "/usr/sbin/php-fpm7;"]
+CMD ["/usr/sbin/php-fpm7.3", "--nodaemonize"]
+
+
